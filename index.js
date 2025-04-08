@@ -27,22 +27,29 @@ app.get('/webhook', (req, res) => {
 });
 
 // 📩 Webhook event handler (POST)
+// app.post('/webhook', (req, res) => {
+//   const signature = req.headers['x-hub-signature-256'];
+//   const body = JSON.stringify(req.body);
+
+//   const expectedSignature = `sha256=${crypto
+//     .createHmac('sha256', APP_SECRET)
+//     .update(body)
+//     .digest('hex')}`;
+
+//   if (signature !== expectedSignature) {
+//     return res.sendStatus(403); // not legit
+//   }
+
+//   console.log('✅ Webhook event received:', req.body);
+//   res.sendStatus(200);
+// });
+
 app.post('/webhook', (req, res) => {
-  const signature = req.headers['x-hub-signature-256'];
-  const body = JSON.stringify(req.body);
+    console.log('✅ Webhook event received (DEV MODE):', req.body);
+    res.sendStatus(200);
+  });
+  
 
-  const expectedSignature = `sha256=${crypto
-    .createHmac('sha256', APP_SECRET)
-    .update(body)
-    .digest('hex')}`;
-
-  if (signature !== expectedSignature) {
-    return res.sendStatus(403); // not legit
-  }
-
-  console.log('✅ Webhook event received:', req.body);
-  res.sendStatus(200);
-});
 const port = process.env.PORT || 3003
 
 // Start server
